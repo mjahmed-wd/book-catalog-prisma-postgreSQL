@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/Users/metadesign/Desktop/projects/learning/Apollo 2.0/Assignment 8/logs/winston/successes/.52300e5c34987da97dd41e3dfc9da94a234724b3-audit.json",
+    "files": [
+        {
+            "date": 1693754324292,
+            "name": "/Users/metadesign/Desktop/projects/learning/Apollo 2.0/Assignment 8/logs/winston/successes/phu-2023-03-09-21-success.log",
+            "hash": "c1d36bdf9b89d1dc621a09594a1a361a08b821786c75f008ac21d2e40b1565c5"
+        }
+    ],
+    "hashType": "sha256"
+}
