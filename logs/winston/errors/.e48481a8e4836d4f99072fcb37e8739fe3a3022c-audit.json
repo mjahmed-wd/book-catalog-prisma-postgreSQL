@@ -9,6 +9,16 @@
             "date": 1693754324293,
             "name": "/Users/metadesign/Desktop/projects/learning/Apollo 2.0/Assignment 8/logs/winston/errors/phu-2023-03-09-21-error.log",
             "hash": "113142c70d9db4c7168f713b650c243615be74b43c29e6c6fe1463216d7f7f4d"
+        },
+        {
+            "date": 1693765216810,
+            "name": "/Users/metadesign/Desktop/projects/learning/Apollo 2.0/Assignment 8/logs/winston/errors/phu-2023-04-09-00-error.log",
+            "hash": "ce37161d150035533cc4fa20cd1ce88269703b362fe78ad97e865b12edbaa161"
+        },
+        {
+            "date": 1693847643809,
+            "name": "/Users/metadesign/Desktop/projects/learning/Apollo 2.0/Assignment 8/logs/winston/errors/phu-2023-04-09-23-error.log",
+            "hash": "176a3aa7a5e8b9956d8c495c6c2f8a86e050e2bb707d113a4174c1d588fe9def"
         }
     ],
     "hashType": "sha256"
