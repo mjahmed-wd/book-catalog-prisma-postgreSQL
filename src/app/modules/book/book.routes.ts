@@ -6,9 +6,9 @@ import { BookController } from './book.controller';
 import { BookValidation } from './book.validations';
 const router = express.Router();
 
-// router
-//   .route('/')
-//   .get(BookController.getAllFromDB)
+router
+  .route('/')
+  .get(BookController.getAllFromDB)
 
 router
   .route('/create-book')

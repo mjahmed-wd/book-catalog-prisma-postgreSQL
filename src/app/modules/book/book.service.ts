@@ -5,6 +5,8 @@ import { IPaginationOptions } from '../../../interfaces/pagination';
 import prisma from '../../../shared/prisma';
 import ApiError from '../../../errors/ApiError';
 import httpStatus from 'http-status';
+import { IBookFilterRequest } from './book.interface';
+import { bookRelationalFields, bookRelationalFieldsMapper, bookSearchableFields } from './book.constants';
 
 const insertIntoDB = async (data: Book): Promise<Book> => {
   const isExist = await prisma.book.findFirst({
@@ -45,28 +47,77 @@ const insertIntoDB = async (data: Book): Promise<Book> => {
   return result;
 };
 
-// const getAllFromDB = async (
-//   filters: any,
-//   options: IPaginationOptions
-// ): Promise<IGenericResponse<Category[]>> => {
-//   const result = await prisma.category.findMany({});
+const getAllFromDB = async (
+  filters: IBookFilterRequest,
+  options: IPaginationOptions
+): Promise<IGenericResponse<Book[]>> => {
+  const { limit, page, skip } = paginationHelpers.calculatePagination(options);
+  const { searchTerm, ...filterData } = filters;
 
-//   const total = await prisma.category.count({
-//     where: {
-//       ...filters,
-//     },
-//   });
-//   const { page = 0, limit = 0 } = options;
+  const andConditions = [];
 
-//   return {
-//     meta: {
-//       total,
-//       page,
-//       limit,
-//     },
-//     data: result,
-//   };
-// };
+  if (searchTerm) {
+    andConditions.push({
+      OR: bookSearchableFields.map(field => ({
+        [field]: {
+          contains: searchTerm,
+          mode: 'insensitive',
+        },
+      })),
+    });
+  }
+
+  if (Object.keys(filterData).length > 0) {
+    andConditions.push({
+      AND: Object.keys(filterData).map(key => {
+        if (bookRelationalFields.includes(key)) {
+          return {
+            [bookRelationalFieldsMapper[key]]: {
+              id: (filterData as any)[key],
+            },
+          };
+        } else {
+          return {
+            [key]: {
+              equals: (filterData as any)[key],
+            },
+          };
+        }
+      }),
+    });
+  }
+
+  const whereConditions: Prisma.BookWhereInput =
+    andConditions.length > 0 ? { AND: andConditions } : {};
+
+  const result = await prisma.book.findMany({
+    include: {
+      category: true,
+    },
+    where: whereConditions,
+    skip,
+    take: limit,
+    // orderBy:
+    //     options.sortBy && options.sortOrder
+    //         ? { [options.sortBy]: options.sortOrder }
+    //         : {
+    //             createdAt: 'desc'
+    //         }
+  });
+  const total = await prisma.book.count({
+    where: whereConditions,
+  });
+
+  return {
+    meta: {
+      total,
+      page,
+      limit,
+    },
+    data: result,
+  };
+};
+
 
 // const getByIdFromDB = async (id: string): Promise<Category | null> => {
 //   const result = await prisma.category.findUnique({
@@ -110,7 +161,7 @@ const insertIntoDB = async (data: Book): Promise<Book> => {
 
 export const BookService = {
   insertIntoDB,
-  //   getAllFromDB,
+    getAllFromDB,
   //   getByIdFromDB,
   //   updateIntoDB,
   //   deleteFromDB,
