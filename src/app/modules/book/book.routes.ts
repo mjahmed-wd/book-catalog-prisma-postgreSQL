@@ -18,14 +18,18 @@ router
     BookController.insertIntoDB
   );
 
-// router
-//   .route('/:id')
-//   .get(BookController.getByIdFromDB)
-//   .patch(
-//     auth(ENUM_USER_ROLE.ADMIN),
-//     validateRequest(CategoryValidation.update),
-//     BookController.updateIntoDB
-//   )
-//   .delete(auth(ENUM_USER_ROLE.ADMIN), BookController.deleteFromDB);
+router
+  .route('/:categoryId/category')
+  .get(BookController.getBookByCategoryFromDB)
+
+router
+  .route('/:id')
+  .get(BookController.getByIdFromDB)
+  .patch(
+    auth(ENUM_USER_ROLE.ADMIN),
+    validateRequest(BookValidation.update),
+    BookController.updateIntoDB
+  )
+  .delete(auth(ENUM_USER_ROLE.ADMIN), BookController.deleteFromDB);
 
 export const bookRoutes = router;

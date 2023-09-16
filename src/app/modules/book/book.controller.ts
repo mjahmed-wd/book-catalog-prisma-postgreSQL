@@ -29,46 +29,57 @@ const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
-// const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
-//     const { id } = req.params;
-//     const result = await BookService.getByIdFromDB(id);
-//     console.log(result);
-//     sendResponse(res, {
-//         statusCode: httpStatus.OK,
-//         success: true,
-//         message: 'Categories fetched successfully',
-//         data: result
-//     });
-// });
+const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const result = await BookService.getByIdFromDB(id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Book fetched successfully',
+        data: result
+    });
+});
 
-// const updateIntoDB = catchAsync(async (req: Request, res: Response) => {
-//     const { id } = req.params;
-//     const payload = req.body;
-//     const result = await BookService.updateIntoDB(id, payload);
-//     sendResponse(res, {
-//         statusCode: httpStatus.OK,
-//         success: true,
-//         message: 'Category updated successfully',
-//         data: result
-//     });
-// });
+const getBookByCategoryFromDB = catchAsync(async (req: Request, res: Response) => {
+    const { categoryId } = req.params;
+    const result = await BookService.getBookByCategoryFromDB(categoryId);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Book fetched successfully',
+        data: result
+    });
+});
 
-// const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
-//     const { id } = req.params;
-//     const result = await BookService.deleteFromDB(id);
-//     sendResponse(res, {
-//         statusCode: httpStatus.OK,
-//         success: true,
-//         message: 'Category deleted successfully',
-//         data: result
-//     });
-// })
+const updateIntoDB = catchAsync(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const payload = req.body;
+    const result = await BookService.updateIntoDB(id, payload);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Book updated successfully',
+        data: result
+    });
+});
+
+const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const result = await BookService.deleteFromDB(id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Book deleted successfully',
+        data: result
+    });
+})
 
 
 export const BookController = {
     insertIntoDB,
     getAllFromDB,
-    // getByIdFromDB,
-    // updateIntoDB,
-    // deleteFromDB
+    getByIdFromDB,
+    getBookByCategoryFromDB,
+    updateIntoDB,
+    deleteFromDB
 };

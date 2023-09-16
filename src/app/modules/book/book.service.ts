@@ -6,7 +6,11 @@ import prisma from '../../../shared/prisma';
 import ApiError from '../../../errors/ApiError';
 import httpStatus from 'http-status';
 import { IBookFilterRequest } from './book.interface';
-import { bookRelationalFields, bookRelationalFieldsMapper, bookSearchableFields } from './book.constants';
+import {
+  bookRelationalFields,
+  bookRelationalFieldsMapper,
+  bookSearchableFields,
+} from './book.constants';
 
 const insertIntoDB = async (data: Book): Promise<Book> => {
   const isExist = await prisma.book.findFirst({
@@ -93,6 +97,7 @@ const getAllFromDB = async (
   const result = await prisma.book.findMany({
     include: {
       category: true,
+      // reviewAndRatings: true,
     },
     where: whereConditions,
     skip,
@@ -118,51 +123,75 @@ const getAllFromDB = async (
   };
 };
 
+const getByIdFromDB = async (id: string): Promise<Book | null> => {
+  const result = await prisma.book.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      category: true,
+      reviewAndRatings: true,
+    },
+  });
+  return result;
+};
 
-// const getByIdFromDB = async (id: string): Promise<Category | null> => {
-//   const result = await prisma.category.findUnique({
-//     where: {
-//       id,
-//     },
-//     include: {
-//       books: true,
-//     },
-//   });
-//   return result;
-// };
+const getBookByCategoryFromDB = async (categoryId: string): Promise<Book[]> => {
+  const isCategoryExist = await prisma.category.findFirst({
+    where: {
+      id: categoryId,
+    },
+  });
 
-// const updateIntoDB = async (
-//   id: string,
-//   payload: Partial<Category>
-// ): Promise<Category> => {
-//   const result = await prisma.category.update({
-//     where: {
-//       id,
-//     },
-//     data: payload,
-//     include: {
-//       books: true,
-//     },
-//   });
-//   return result;
-// };
+  if (!isCategoryExist) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Category does not exist');
+  }
 
-// const deleteFromDB = async (id: string): Promise<Category> => {
-//   const result = await prisma.category.delete({
-//     where: {
-//       id,
-//     },
-//     include: {
-//       books: true,
-//     },
-//   });
-//   return result;
-// };
+  const result = await prisma.book.findMany({
+    where: {
+      categoryId,
+    },
+    include: {
+      category: true,
+      reviewAndRatings: true,
+    },
+  });
+  return result;
+};
+
+const updateIntoDB = async (
+  id: string,
+  payload: Partial<Book>
+): Promise<Book> => {
+  const result = await prisma.book.update({
+    where: {
+      id,
+    },
+    data: payload,
+    include: {
+      category: true,
+    },
+  });
+  return result;
+};
+
+const deleteFromDB = async (id: string): Promise<Book> => {
+  const result = await prisma.book.delete({
+    where: {
+      id,
+    },
+    include: {
+      category: true,
+    },
+  });
+  return result;
+};
 
 export const BookService = {
   insertIntoDB,
-    getAllFromDB,
-  //   getByIdFromDB,
-  //   updateIntoDB,
-  //   deleteFromDB,
+  getAllFromDB,
+  getByIdFromDB,
+  getBookByCategoryFromDB,
+  updateIntoDB,
+  deleteFromDB,
 };

@@ -16,15 +16,15 @@ const create = z.object({
 
 const update = z.object({
   body: z.object({
-    title: z.string({ required_error: 'Title is required' }).min(2).max(255),
-    author: z.string({ required_error: 'Author is required' }).min(2).max(255),
-    genre: z.string({ required_error: 'Genre is required' }).min(2).max(255),
-    price: z.number({ required_error: 'Price is required' }).min(1),
+    title: z.string({ required_error: 'Title is required' }).min(2).max(255).optional(),
+    author: z.string({ required_error: 'Author is required' }).min(2).max(255).optional(),
+    genre: z.string({ required_error: 'Genre is required' }).min(2).max(255).optional(),
+    price: z.number({ required_error: 'Price is required' }).min(1).optional(),
     publicationDate: z.coerce.date({
       invalid_type_error: 'Invalid date',
       required_error: 'Publication date is required',
-    }),
-    categoryId: z.string({ required_error: 'Category id is required' }),
+    }).optional(),
+    categoryId: z.string({ required_error: 'Category id is required' }).optional(),
   }),
 });
 
