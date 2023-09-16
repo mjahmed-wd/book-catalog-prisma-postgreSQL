@@ -49,6 +49,11 @@
             "date": 1694892483295,
             "name": "/Users/metadesign/Desktop/projects/learning/Apollo 2.0/Assignment 8/logs/winston/errors/phu-2023-17-09-01-error.log",
             "hash": "887c827ba0f5252c131d1930ceb4d6e14a42d21f33dcb2f60ce5b04efe3d188e"
+        },
+        {
+            "date": 1694894417393,
+            "name": "/Users/metadesign/Desktop/projects/learning/Apollo 2.0/Assignment 8/logs/winston/errors/phu-2023-17-09-02-error.log",
+            "hash": "d67c246a73750f46ebeb75752cfc25670cc2fda54a1bdd5937624dea1f4e0280"
         }
     ],
     "hashType": "sha256"
