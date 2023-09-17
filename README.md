@@ -10,7 +10,7 @@
 - api/v1/users (GET)
 - api/v1/users/2deb009f-88be-4fd0-987b-3828cf74a8e6 (Single GET)
 - api/v1/users/2deb009f-88be-4fd0-987b-3828cf74a8e6 (PATCH)
-- api/v1/users/2deb009f-88be-4fd0-987b-3828cf74a8e6 (DELETE) Include an id that is saved in your database
+- api/v1/users/2deb009f-88be-4fd0-987b-3828cf74a8e6 (DELETE) 
 - api/v1/profile (GET)
 
 ### Category
