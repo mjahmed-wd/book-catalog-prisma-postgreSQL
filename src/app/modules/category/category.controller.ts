@@ -31,7 +31,6 @@ const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
 const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
     const { id } = req.params;
     const result = await CategoryService.getByIdFromDB(id);
-    console.log(result);
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
